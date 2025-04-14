@@ -1,0 +1,32 @@
+.key {
+    background-color: var(--unused);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    /* padding: 1em; */
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1.15;
+    height: 58px;
+    border-radius: 4px;
+    flex: 1;
+}
+
+.key-rows {
+    display: flex;
+    gap: 0.5em;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1em;
+}
