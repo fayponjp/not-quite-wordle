@@ -20,8 +20,15 @@
     gap: 5px;
 }
 
+/* #121213 if there's a guess */
 .answer-grid-tile {
     border: 2px solid #3a3a3c;
     width: 100%;
     color: var(--text);
+    display: flex;
+    text-transform: uppercase;
+    font-size: 2rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }

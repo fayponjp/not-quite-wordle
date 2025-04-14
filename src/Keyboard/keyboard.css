@@ -43,3 +43,15 @@
 .half-key {
     flex: 0.5;
 }
+
+.key.guess {
+    background-color: var(--incorrect);
+}
+
+.key.correct {
+    background-color: var(--correct);
+}
+
+.key.close-guess {
+    background-color: var(--almost);
+}

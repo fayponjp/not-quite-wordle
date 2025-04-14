@@ -1,13 +1,23 @@
+import clsx from 'clsx'
 import './keyboard.css'
 
-export default function Keyboard({onClick}) {
+export default function Keyboard({onClick, letters, word}) {
     const firstRow = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
     const secondRow = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'];
     const thirdRow = ['z' , 'x', 'c', 'v', 'b', 'n', 'm'];
 
     const [firstRowBtns, secondRowBtns, thirdRowBtns] = [firstRow, secondRow, thirdRow].map((array) => {
         return array.map(key => {
-            return <button className='key' key={key} onClick={() => onClick(key)}>{key}</button>
+            let colorClass
+            if (letters.indexOf(key) === word.indexOf(key) && word.indexOf(key) >= 0) {
+                colorClass = 'correct'
+            } else if (letters.includes(key) && word.includes(key)) {
+                colorClass = 'close-guess'
+            } else if (letters.includes(key)) {
+                colorClass = 'guess'
+            }
+            const classNames = clsx('key', colorClass)
+            return <button className={classNames} key={key} onClick={() => onClick(key)}>{key}</button>
         })
     })
 

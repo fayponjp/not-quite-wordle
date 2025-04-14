@@ -1,24 +1,37 @@
-import { useState } from 'react';
-import './answergrid.css'
+import { useEffect, useState } from 'react';
+import './answergrid.css';
 
-export default function AnswerGrid({letters, word}) {
-    const [grid, setGrid] = useState();
-    const rowElements = []
-    const rowTiles = []
+export default function AnswerGrid({ letters, word, index }) {
+    const [rowElements, setRowElements] = useState(createRowElements());
 
-    for (let i = 0; i < 5; i++) {
-        rowTiles.push(<div className='answer-grid-tile' key={`tile${i}i`}></div>)
+    function createRowElements() {
+        return Array(6)
+                .fill(null)
+                .map((_any, i) => <div className="answer-grid-row" key={`row${i}`}></div>)
     }
 
-    for (let i = 0; i < 6; i++) {
-        rowElements.push(<div className='answer-grid-row' key={`row${i}i`}>{rowTiles}</div>)
-    }
-    
+    useEffect(() => {
+        setRowElements((prevRowElements) => {
+            const safePrevRowElements = prevRowElements || createRowElements()
+            return safePrevRowElements.map((prevElement, iterator) => (
+                <div className="answer-grid-row" key={`row${iterator}`}>
+                    {Array(5)
+                        .fill(null)
+                        .map((_any, i) => (
+                            <div className="answer-grid-tile" key={`tile${iterator}-${i}`}>
+                                {index === iterator ? letters[i] || '' : ''}
+                            </div>
+                        ))}
+                </div>
+            ));
+        });
+    }, [letters, index])
+
     return (
         <div className="answers">
-            <div className='answer-grid'>
+            <div className="answer-grid">
                 {rowElements}
             </div>
         </div>
-    )
+    );
 }
