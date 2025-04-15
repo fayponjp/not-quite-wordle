@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import './answergrid.css';
 
-export default function AnswerGrid({ letters, word, index }) {
-    const [rowElements, setRowElements] = useState(createRowElements());
+export default function AnswerGrid({ letters, word, enter }) {
+    const [rowElements, setRowElements] = useState(createRowElements())
 
     function createRowElements() {
         return Array(6)
@@ -13,19 +13,21 @@ export default function AnswerGrid({ letters, word, index }) {
     useEffect(() => {
         setRowElements((prevRowElements) => {
             const safePrevRowElements = prevRowElements || createRowElements()
-            return safePrevRowElements.map((prevElement, iterator) => (
-                <div className="answer-grid-row" key={`row${iterator}`}>
-                    {Array(5)
+            return safePrevRowElements.map((prevElement, index) => (
+                <div className="answer-grid-row" key={`row${index}`}>
+                    {
+                        Array(5)
                         .fill(null)
                         .map((_any, i) => (
-                            <div className="answer-grid-tile" key={`tile${iterator}-${i}`}>
-                                {index === iterator ? letters[i] || '' : ''}
+                            <div className="answer-grid-tile" key={`tile${index}-${i}`}>
+                                {letters[index] ? letters[index][i] || '' : ''}
                             </div>
-                        ))}
+                        ))
+                    }
                 </div>
-            ));
-        });
-    }, [letters, index])
+            ))
+        })
+    }, [letters, enter])
 
     return (
         <div className="answers">
@@ -33,5 +35,5 @@ export default function AnswerGrid({ letters, word, index }) {
                 {rowElements}
             </div>
         </div>
-    );
+    )
 }

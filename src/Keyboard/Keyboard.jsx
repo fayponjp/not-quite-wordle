@@ -1,21 +1,27 @@
 import clsx from 'clsx'
 import './keyboard.css'
 
-export default function Keyboard({onClick, letters, word}) {
+export default function Keyboard({onClick, letters, word, enter, setEnter}) {
     const firstRow = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
-    const secondRow = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'];
-    const thirdRow = ['z' , 'x', 'c', 'v', 'b', 'n', 'm'];
+    const secondRow = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
+    const thirdRow = ['z' , 'x', 'c', 'v', 'b', 'n', 'm']
+
+    function getColorClass(key) {
+        for (let array of letters) {
+            if (array.indexOf(key) === word.indexOf(key) && word.indexOf(key) >= 0 && enter.enter)  {
+                return 'correct'
+            } else if (array.includes(key) && word.includes(key) && enter.enter) {
+                return 'close-guess'
+            } else if (array.includes(key)) {
+                return 'guess'
+            }
+        }
+    }
 
     const [firstRowBtns, secondRowBtns, thirdRowBtns] = [firstRow, secondRow, thirdRow].map((array) => {
         return array.map(key => {
-            let colorClass
-            if (letters.indexOf(key) === word.indexOf(key) && word.indexOf(key) >= 0) {
-                colorClass = 'correct'
-            } else if (letters.includes(key) && word.includes(key)) {
-                colorClass = 'close-guess'
-            } else if (letters.includes(key)) {
-                colorClass = 'guess'
-            }
+            let colorClass = getColorClass(key)
+
             const classNames = clsx('key', colorClass)
             return <button className={classNames} key={key} onClick={() => onClick(key)}>{key}</button>
         })
