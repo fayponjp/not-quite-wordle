@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './answergrid.css';
-import { getColorClass } from '../utils';
+import { getColorClassGrid } from '../utils';
 import clsx from 'clsx';
 
 export default function AnswerGrid({ letters, word, enter }) {
@@ -10,16 +10,6 @@ export default function AnswerGrid({ letters, word, enter }) {
         return Array(6)
                 .fill(null)
                 .map((_any, i) => <div className="answer-grid-row" key={`row${i}`}></div>)
-    }
-
-    function getColorClassGrid(letter, word, wordLetter, previousLoop) {
-        if (previousLoop) {
-            if (letter === wordLetter) {
-                return 'correct'
-            } else if (word.includes(letter)) {
-                return 'close-guess'
-            }
-        }
     }
 
     useEffect(() => {

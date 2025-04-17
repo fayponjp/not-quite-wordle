@@ -12,4 +12,16 @@ function getColorClass(key, letters, enter, word) {
     }
 }
 
-export { getColorClass }
+function getColorClassGrid(letter, word, wordLetter, previousLoop) {
+    if (previousLoop) {
+        if (letter === wordLetter) {
+            return 'correct'
+        } else if (word.includes(letter)) {
+            return 'close-guess'
+        } else {
+            return 'guess'
+        }
+    }
+}
+
+export { getColorClass, getColorClassGrid }
