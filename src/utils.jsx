@@ -1,9 +1,9 @@
-function getColorClass(key, letters, enter, word) {
+function getColorClass(key, letters, enter, word, correctLetters) {
     for (let i = 0; i < letters.length; i++) {
-        if (i < enter.index) {
-            if (letters[i].indexOf(key) === word.indexOf(key) && word.indexOf(key) >= 0 && enter.enter)  {
+        if (i == enter.index - 1) {
+            if ((letters[i].indexOf(key) === word.indexOf(key) && word.indexOf(key) >= 0) || correctLetters.includes(key))  {
                 return 'correct'
-            } else if (letters[i].includes(key) && word.includes(key) && enter.enter) {
+            } else if (letters[i].includes(key) && word.includes(key)) {
                 return 'close-guess'
             } else if (letters[i].includes(key)) {
                 return 'guess'
