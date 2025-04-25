@@ -5,7 +5,8 @@ import { generate } from 'random-words'
 import './App.css'
 
 function App() {
-  const [word, setWord] = useState(generate({ minLength: 5, maxLength: 5 }).split(''))
+  // generate({ minLength: 5, maxLength: 5 }).split('')
+  const [word, setWord] = useState('books')
   const [enter, setEnter] = useState({index: 0, enter: false})
   const [letters, setLetters] = useState([[]])
 
