@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import Keyboard from './Keyboard/keyboard'
 import AnswerGrid from './AnswerGrid/AnswerGrid'
 import { generate } from 'random-words'
+import wordExists from 'word-exists'
 import './App.css'
 
 function App() {
-  // generate({ minLength: 5, maxLength: 5 }).split('')
-  const [word, setWord] = useState('books')
+  const [word, setWord] = useState(generate({ minLength: 5, maxLength: 5 }).split(''))
   const [enter, setEnter] = useState({index: 0, enter: false})
   const [letters, setLetters] = useState([[]])
 
@@ -17,6 +17,16 @@ function App() {
       return currentLetters
     })
   }
+
+  function handleBackspace() {
+    setLetters(prevLetters => {
+      const currentLetters = [...prevLetters]
+      if (currentLetters[enter.index].length > 0) {
+        currentLetters[enter.index] = currentLetters[enter.index].slice(0, -1)
+      }
+      return currentLetters
+    })
+  }
   
   useEffect(() => {
     function handleKeyDown(e) {
@@ -24,18 +34,14 @@ function App() {
       if (rex.test(e.key)) handleInput(e.key)
 
       if (letters[enter.index].length >= 5 && e.key === 'Enter') {
-        setLetters(prevLetters => [...prevLetters, []])
-        setEnter(prevEnter => ({index: (prevEnter.index + 1), enter:true}))
+        if (wordExists(letters[enter.index].join(''))) {
+          setLetters(prevLetters => [...prevLetters, []])
+          setEnter(prevEnter => ({index: (prevEnter.index + 1), enter:true}))
+        }
       }
 
       if (e.key === 'Backspace') {
-        setLetters(prevLetters => {
-          const currentLetters = [...prevLetters]
-          if (currentLetters[enter.index].length > 0) {
-            currentLetters[enter.index] = currentLetters[enter.index].slice(0, -1)
-          }
-          return currentLetters
-        })
+        handleBackspace()
       }
     }
 
@@ -61,6 +67,7 @@ function App() {
         word={word} 
         enter={enter}
         setEnter={setEnter}
+        handleBackspace={handleBackspace}
       />
         {word}
     </div>

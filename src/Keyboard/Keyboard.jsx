@@ -1,9 +1,8 @@
 import clsx from 'clsx'
 import './keyboard.css'
-import { getColorClass } from '../utils'
 import { useRef } from 'react'
 
-export default function Keyboard({onClick, letters, word, enter, setEnter}) {
+export default function Keyboard({onClick, letters, word, enter, setEnter, handleBackspace}) {
     const firstRow = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p']
     const secondRow = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l']
     const thirdRow = ['z' , 'x', 'c', 'v', 'b', 'n', 'm']
@@ -35,12 +34,10 @@ export default function Keyboard({onClick, letters, word, enter, setEnter}) {
         })
     })
 
-    console.log(correctLetters.current)
-
     secondRowBtns.unshift(<div className='half-key' key='half-key1'></div>)
     secondRowBtns.push(<div className='half-key' key='half-key2'></div>)
     thirdRowBtns.unshift(<button className='key key-wide' key='enter'>ENTER</button>)
-    thirdRowBtns.push(<button className='key key-wide' key='delete'><i className='fa-solid fa-delete-left'></i></button>)
+    thirdRowBtns.push(<button className='key key-wide' key='delete' onClick={handleBackspace}><i className='fa-solid fa-delete-left'></i></button>)
 
     return (
         <div className='keyboard'>
