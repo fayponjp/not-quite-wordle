@@ -3,7 +3,7 @@ import './answergrid.css';
 import { getColorClassGrid } from '../utils';
 import clsx from 'clsx';
 
-export default function AnswerGrid({ letters, word, enter }) {
+export default function AnswerGrid({ letters, word, game }) {
     const [rowElements, setRowElements] = useState(createRowElements())
 
     function createRowElements() {
@@ -21,17 +21,19 @@ export default function AnswerGrid({ letters, word, enter }) {
                         Array(5)
                         .fill(null)
                         .map((_any, i) => {
-                            const colorClass = letters[index] ? getColorClassGrid(letters[index][i], word, word[i], index < enter.index) : null
+                            const colorClass = letters[index] ? getColorClassGrid(letters[index][i], word, word[i], index < game.guessRow) : null
                             const classNames = clsx('answer-grid-tile', colorClass)
-                            return (<div className={classNames} key={`tile${index}-${i}`}>
-                                {letters[index] ? letters[index][i] || '' : ''}
-                            </div>)
+                            return (
+                                <div className={classNames} key={`tile${index}-${i}`}>
+                                    {letters[index] ? letters[index][i] || '' : ''}
+                                </div>
+                            )
                         })
                     }
                 </div>
             ))
         })
-    }, [letters, enter])
+    }, [letters, game])
 
     return (
         <div className="answers">

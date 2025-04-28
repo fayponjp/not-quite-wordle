@@ -3,17 +3,18 @@ import Keyboard from './Keyboard/keyboard'
 import AnswerGrid from './AnswerGrid/AnswerGrid'
 import { generate } from 'random-words'
 import wordExists from 'word-exists'
+import Modal from './Modal/Modal'
 import './App.css'
 
 function App() {
   const [word, setWord] = useState(generate({ minLength: 5, maxLength: 5 }).split(''))
-  const [enter, setEnter] = useState({index: 0, enter: false})
+  const [game, setGame] = useState({guessRow: 0, gameOver: false})
   const [letters, setLetters] = useState([[]])
 
   function handleInput(letterInput) {
     setLetters(prevLetters => {
       const currentLetters = [...prevLetters]
-      currentLetters[enter.index] = (currentLetters[enter.index].length < 5) ? [...currentLetters[enter.index], letterInput] : currentLetters[enter.index]
+      currentLetters[game.guessRow] = (currentLetters[game.guessRow].length < 5) ? [...currentLetters[game.guessRow], letterInput] : currentLetters[game.guessRow]
       return currentLetters
     })
   }
@@ -21,11 +22,28 @@ function App() {
   function handleBackspace() {
     setLetters(prevLetters => {
       const currentLetters = [...prevLetters]
-      if (currentLetters[enter.index].length > 0) {
-        currentLetters[enter.index] = currentLetters[enter.index].slice(0, -1)
+      if (currentLetters[game.guessRow].length > 0) {
+        currentLetters[game.guessRow] = currentLetters[game.guessRow].slice(0, -1)
       }
       return currentLetters
     })
+  }
+
+  function handleEnter() {
+    const currentWord = letters[game.guessRow].join('')
+    if (wordExists(currentWord) && letters[game.guessRow].length >= 5) {
+      setLetters(prevLetters => [...prevLetters, []])
+      setGame(prevEnter => {
+
+        return {...prevEnter, guessRow: (prevEnter.guessRow + 1), gameOver: currentWord === word.join('')}
+      })
+      // if (currentWord === word.join('')) {
+      //   console.log("Winning state")
+      //   setGame(prevEnter => ({...prevEnter, gameOver: true}))
+      // } else {
+
+      // }
+    }
   }
   
   useEffect(() => {
@@ -33,11 +51,8 @@ function App() {
       const rex = /^[A-Za-z]$/
       if (rex.test(e.key)) handleInput(e.key)
 
-      if (letters[enter.index].length >= 5 && e.key === 'Enter') {
-        if (wordExists(letters[enter.index].join(''))) {
-          setLetters(prevLetters => [...prevLetters, []])
-          setEnter(prevEnter => ({index: (prevEnter.index + 1), enter:true}))
-        }
+      if (e.key === 'Enter') {
+        handleEnter()
       }
 
       if (e.key === 'Backspace') {
@@ -54,22 +69,26 @@ function App() {
 
   return (
     <div className="game">
-      {letters} {enter.index}
+      {letters} {game.guessRow}
       <AnswerGrid 
         letters={letters} 
         word={word} 
-        enter={enter}
+        game={game}
       />
 
       <Keyboard 
         onClick={handleInput} 
         letters={letters} 
         word={word} 
-        enter={enter}
-        setEnter={setEnter}
+        game={game}
+        setGame={setGame}
         handleBackspace={handleBackspace}
+        handleEnter={handleEnter}
       />
         {word}
+      <Modal
+        game={game}
+      >Content</Modal>
     </div>
   )
 }

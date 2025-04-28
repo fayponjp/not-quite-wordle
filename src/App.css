@@ -6,7 +6,6 @@
   --incorrect: #3a3a3c;
   --unused: #818384;
   font-family: 'Libre Franklin', sans-serif;
-  
 }
 
 * {
@@ -20,6 +19,7 @@ body {
   color: var(--text);
   width: 100vw;
   height: 100vh;
+
 }
 
 #root {
@@ -37,4 +37,5 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 }
