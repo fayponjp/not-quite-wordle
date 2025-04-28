@@ -1,12 +1,11 @@
 import clsx from 'clsx'
 import './modal.css'
 
-export default function Modal({children, game}) {
-    console.log(game)
+export default function Modal({game}) {
     const classes = clsx('modal', game.gameOver && 'display')
     return (
         <div className={classes}>
-            {children}
+            {game.gameWon ? 'You won!' : `It's so over...`}
         </div>
     )
 }

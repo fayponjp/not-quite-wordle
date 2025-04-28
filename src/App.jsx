@@ -8,7 +8,7 @@ import './App.css'
 
 function App() {
   const [word, setWord] = useState(generate({ minLength: 5, maxLength: 5 }).split(''))
-  const [game, setGame] = useState({guessRow: 0, gameOver: false})
+  const [game, setGame] = useState({guessRow: 0, gameOver: false, gameWon: false})
   const [letters, setLetters] = useState([[]])
 
   function handleInput(letterInput) {
@@ -34,32 +34,30 @@ function App() {
     if (wordExists(currentWord) && letters[game.guessRow].length >= 5) {
       setLetters(prevLetters => [...prevLetters, []])
       setGame(prevEnter => {
-
-        return {...prevEnter, guessRow: (prevEnter.guessRow + 1), gameOver: currentWord === word.join('')}
+        return {
+          ...prevEnter, 
+          gameOver: currentWord === word.join('') || prevEnter.guessRow + 1 === 6,
+          guessRow: (prevEnter.guessRow + 1), 
+          gameWon: currentWord === word.join('')
+        }
       })
-      // if (currentWord === word.join('')) {
-      //   console.log("Winning state")
-      //   setGame(prevEnter => ({...prevEnter, gameOver: true}))
-      // } else {
-
-      // }
     }
   }
   
-  useEffect(() => {
-    function handleKeyDown(e) {
-      const rex = /^[A-Za-z]$/
-      if (rex.test(e.key)) handleInput(e.key)
+  function handleKeyDown(e) {
+    const rex = /^[A-Za-z]$/
+    if (rex.test(e.key)) handleInput(e.key)
 
-      if (e.key === 'Enter') {
-        handleEnter()
-      }
-
-      if (e.key === 'Backspace') {
-        handleBackspace()
-      }
+    if (e.key === 'Enter') {
+      handleEnter()
     }
 
+    if (e.key === 'Backspace') {
+      handleBackspace()
+    }
+  }
+
+  useEffect(() => {
     document.addEventListener('keydown', handleKeyDown)
 
     return () => {
@@ -88,7 +86,7 @@ function App() {
         {word}
       <Modal
         game={game}
-      >Content</Modal>
+      />
     </div>
   )
 }
