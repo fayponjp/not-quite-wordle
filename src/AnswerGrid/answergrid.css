@@ -44,3 +44,17 @@
 .answer-grid-tile.close-guess {
     background-color: var(--almost);
 }
+
+@keyframes pop {
+    50% {
+      transform: scale(1.2)
+    }
+  
+    100% {
+      transform: scale(1)
+    }
+}
+
+.pop {
+    animation: pop 0.15s linear
+}

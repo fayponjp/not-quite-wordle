@@ -36,7 +36,9 @@ export default function AnswerGrid({ letters, word, game }) {
                                     colorClass = 'guess'
                                 }
                             }
-                            const classNames = clsx('answer-grid-tile', colorClass)
+
+                            const popClass = (letters[index] && letters[index][i]) && 'pop'
+                            const classNames = clsx('answer-grid-tile', colorClass, popClass)
                             return (
                                 <div className={classNames} key={`tile${index}-${i}`}>
                                     {letters[index] ? letters[index][i] || '' : ''}
