@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import './answergrid.css';
-import { getColorClassGrid } from '../utils';
 import clsx from 'clsx';
 
 export default function AnswerGrid({ letters, word, game }) {
@@ -15,13 +14,28 @@ export default function AnswerGrid({ letters, word, game }) {
     useEffect(() => {
         setRowElements((prevRowElements) => {
             const safePrevRowElements = prevRowElements || createRowElements()
-            return safePrevRowElements.map((prevElement_, index) => (
-                <div className="answer-grid-row" key={`row${index}`}>
+            return safePrevRowElements.map((prevElement_, index) => {
+                const wordFrequency = {}
+                word.forEach(char => wordFrequency[char] = (wordFrequency[char] || 0) + 1)
+
+                return (<div className="answer-grid-row" key={`row${index}`}>
                     {
                         Array(5)
                         .fill(null)
                         .map((_any, i) => {
-                            const colorClass = letters[index] ? getColorClassGrid(letters[index][i], word, word[i], index < game.guessRow) : null
+                            let colorClass = null
+                            if (letters[index] && index < game.guessRow) {
+                                const letter = letters[index][i]
+                                if (letter === word[i]) {
+                                    colorClass = 'correct'
+                                    wordFrequency[letter]--
+                                } else if (word.includes(letter) && wordFrequency[letter] > 0) {
+                                    colorClass = 'close-guess'
+                                    wordFrequency[letter]--
+                                } else {
+                                    colorClass = 'guess'
+                                }
+                            }
                             const classNames = clsx('answer-grid-tile', colorClass)
                             return (
                                 <div className={classNames} key={`tile${index}-${i}`}>
@@ -30,8 +44,8 @@ export default function AnswerGrid({ letters, word, game }) {
                             )
                         })
                     }
-                </div>
-            ))
+                </div>)
+            })
         })
     }, [letters, game])
 
