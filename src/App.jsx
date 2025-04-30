@@ -12,7 +12,7 @@ function App() {
   const [letters, setLetters] = useState([[]])
 
   function handleInput(letterInput) {
-    setLetters(prevLetters => {
+    !game.gameOver && setLetters(prevLetters => {
       const currentLetters = [...prevLetters]
       currentLetters[game.guessRow] = (currentLetters[game.guessRow].length < 5) ? [...currentLetters[game.guessRow], letterInput] : currentLetters[game.guessRow]
       return currentLetters
@@ -67,7 +67,6 @@ function App() {
 
   return (
     <div className="game">
-      {letters} {game.guessRow}
       <AnswerGrid 
         letters={letters} 
         word={word} 
@@ -83,7 +82,7 @@ function App() {
         handleBackspace={handleBackspace}
         handleEnter={handleEnter}
       />
-        {word}
+
       <Modal
         game={game}
       />

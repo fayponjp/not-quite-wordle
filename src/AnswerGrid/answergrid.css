@@ -31,6 +31,7 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    transition-delay: 0.5s;
 }
 
 .answer-grid-tile.guess {
@@ -47,14 +48,48 @@
 
 @keyframes pop {
     50% {
-      transform: scale(1.2)
+      transform: scale(1.2);
     }
   
     100% {
-      transform: scale(1)
+      transform: scale(1);
+    }
+}
+
+@keyframes flip {
+    60% {
+        transform: rotateX(180deg)
+    }
+
+    100% {
+        transform: rotateX(360deg)
     }
 }
 
 .pop {
-    animation: pop 0.15s linear
+    animation: pop 0.15s linear;
+}
+
+.flip0 {
+    animation: flip 1.2s;
+}
+
+.flip1 {
+    animation: flip 1.2s;
+    animation-delay: 100ms;
+}
+
+.flip2 {
+    animation: flip 1.2s;
+    animation-delay: 200ms;
+}
+
+.flip3 {
+    animation: flip 1.2s;
+    animation-delay: 300ms;
+}
+
+.flip4 {
+    animation: flip 1.2s;
+    animation-delay: 400ms;
 }

@@ -27,20 +27,20 @@ export default function AnswerGrid({ letters, word, game }) {
                             if (letters[index] && index < game.guessRow) {
                                 const letter = letters[index][i]
                                 if (letter === word[i]) {
-                                    colorClass = 'correct'
+                                    colorClass = 'correct ' + `flip${i}`
                                     wordFrequency[letter]--
                                 } else if (word.includes(letter) && wordFrequency[letter] > 0) {
-                                    colorClass = 'close-guess'
+                                    colorClass = 'close-guess ' + `flip${i}`
                                     wordFrequency[letter]--
                                 } else {
-                                    colorClass = 'guess'
+                                    colorClass = 'guess ' + `flip${i}`
                                 }
                             }
 
                             const popClass = (letters[index] && letters[index][i]) && 'pop'
                             const classNames = clsx('answer-grid-tile', colorClass, popClass)
                             return (
-                                <div className={classNames} key={`tile${index}-${i}`}>
+                                <div className={classNames} key={`tile${index}-${i}`} style={{transitionDelay: `${i*100}ms`}}>
                                     {letters[index] ? letters[index][i] || '' : ''}
                                 </div>
                             )
