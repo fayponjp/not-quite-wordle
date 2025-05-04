@@ -95,7 +95,6 @@ function App() {
       <Modal
         game={game}
       />
-      {word}
     </div>
   )
 }
