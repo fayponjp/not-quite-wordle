@@ -12,6 +12,7 @@
     height: 420px;
     gap: 5px;
     padding: 10px;
+    margin-top: 5em;
 }
 
 .answer-grid-row {
@@ -92,4 +93,22 @@
 .flip4 {
     animation: flip 1.2s;
     animation-delay: 400ms;
+}
+
+@keyframes shake {
+    33% {
+        transform: translateX(2px);
+    }
+
+    66% {
+        transform: translateX(-2px);
+    }
+
+    100% {
+        transform: initial;
+    }
+}
+
+.shake {
+    animation: shake 0.25s linear;
 }

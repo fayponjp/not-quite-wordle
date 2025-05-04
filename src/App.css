@@ -24,8 +24,14 @@ body {
 
 #root {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
+}
+
+@media (max-width: 1000px) {
+  #root {
+      /* height: 100vh; */
+  }
 }
 
 .game {
@@ -39,3 +45,4 @@ body {
   justify-content: center;
   position: relative;
 }
+

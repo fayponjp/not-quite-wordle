@@ -3,7 +3,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     gap: 1em;
-    margin-bottom: 3em;
+    margin-top: 3em;
 }
 
 .key-rows {
@@ -12,6 +12,12 @@
     width: 100%;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 400px) {
+    .key-rows {
+        gap: 0.25em;
+    }
 }
 
 .key {

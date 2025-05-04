@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './answergrid.css';
 import clsx from 'clsx';
 
-export default function AnswerGrid({ letters, word, game }) {
+export default function AnswerGrid({ letters, word, game, rowRef }) {
     const [rowElements, setRowElements] = useState(createRowElements())
 
     function createRowElements() {
@@ -16,9 +16,10 @@ export default function AnswerGrid({ letters, word, game }) {
             const safePrevRowElements = prevRowElements || createRowElements()
             return safePrevRowElements.map((prevElement_, index) => {
                 const wordFrequency = {}
-                word.forEach(char => wordFrequency[char] = (wordFrequency[char] || 0) + 1)
 
-                return (<div className="answer-grid-row" key={`row${index}`}>
+                word.forEach(char => wordFrequency[char] = (wordFrequency[char] || 0) + 1)
+                const truthCheck = (letters[index] && letters[index].length === 5 && letters.length - 1 === index)
+                return (<div className='answer-grid-row' key={`row${index}`} ref={(letters[index] && letters[index].length === 5 && letters.length - 1 === index) && rowRef || null}>
                     {
                         Array(5)
                         .fill(null)

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Keyboard from './Keyboard/keyboard'
 import AnswerGrid from './AnswerGrid/AnswerGrid'
 import { generate } from 'random-words'
@@ -10,6 +10,7 @@ function App() {
   const [word, setWord] = useState(generate({ minLength: 5, maxLength: 5 }).split(''))
   const [game, setGame] = useState({guessRow: 0, gameOver: false, gameWon: false})
   const [letters, setLetters] = useState([[]])
+  const rowRef = useRef()
 
   function handleInput(letterInput) {
     !game.gameOver && setLetters(prevLetters => {
@@ -31,16 +32,23 @@ function App() {
 
   function handleEnter() {
     const currentWord = letters[game.guessRow].join('')
-    if (wordExists(currentWord) && letters[game.guessRow].length >= 5) {
-      setLetters(prevLetters => [...prevLetters, []])
-      setGame(prevEnter => {
-        return {
-          ...prevEnter, 
-          gameOver: currentWord === word.join('') || prevEnter.guessRow + 1 === 6,
-          guessRow: (prevEnter.guessRow + 1), 
-          gameWon: currentWord === word.join('')
+    if (letters[game.guessRow].length >= 5) {
+      if (wordExists(currentWord)) {
+        setLetters(prevLetters => [...prevLetters, []])
+        setGame(prevEnter => {
+          return {
+            ...prevEnter, 
+            gameOver: currentWord === word.join('') || prevEnter.guessRow + 1 === 6,
+            guessRow: (prevEnter.guessRow + 1), 
+            gameWon: currentWord === word.join('')
+          }
+        })
+      } else {
+        if (rowRef.current) {
+          rowRef.current.classList.add('shake')
+          setTimeout(() => rowRef.current.classList.remove('shake'), 250)
         }
-      })
+      }
     }
   }
   
@@ -71,6 +79,7 @@ function App() {
         letters={letters} 
         word={word} 
         game={game}
+        rowRef={rowRef}
       />
 
       <Keyboard 
@@ -86,6 +95,7 @@ function App() {
       <Modal
         game={game}
       />
+      {word}
     </div>
   )
 }

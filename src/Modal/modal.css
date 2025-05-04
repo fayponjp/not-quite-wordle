@@ -15,8 +15,25 @@
     font-family: 'NYTKarnakCondensed', serif;
     text-align: center;
     padding: 1em;
+    opacity: 1;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0.9;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 .modal.display {
-    transform: translateY(100%);
+    transform: translateY(50%);
+    animation: fade ease-in-out 8s;
+    opacity: 0;
 }
