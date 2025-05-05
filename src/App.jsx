@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import Keyboard from './Keyboard/keyboard'
+import Keyboard from './Keyboard/Keyboard'
 import AnswerGrid from './AnswerGrid/AnswerGrid'
 import { generate } from 'random-words'
 import wordExists from 'word-exists'
