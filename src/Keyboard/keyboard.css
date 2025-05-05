@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     gap: 1em;
     margin-top: 3em;
+    padding-inline: 0.25em;
 }
 
 .key-rows {

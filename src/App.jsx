@@ -94,6 +94,8 @@ function App() {
 
       <Modal
         game={game}
+        letters={letters}
+        word={word}
       />
     </div>
   )
