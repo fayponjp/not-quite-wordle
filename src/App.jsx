@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import Keyboard from './Keyboard/Keyboard'
 import AnswerGrid from './AnswerGrid/AnswerGrid'
+import Keyboard from './Keyboard/Keyboard'
 import { generate } from 'random-words'
 import wordExists from 'word-exists'
 import Modal from './Modal/Modal'
