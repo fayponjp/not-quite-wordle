@@ -1,0 +1,48 @@
+.guide {
+    border-top: 1px solid #4e4e4e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    gap: 0.5em;
+}
+
+.guide h2 {
+    font-size: 1.3rem;
+}
+
+.guide-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.guide-icon {
+    position: relative;
+    margin-left: 1.2em;
+}
+
+.guide-icon::before {
+    content: '';
+    padding: 5px;
+    border-radius: 50%;
+    height: 5px;
+    width: 5px;
+    /* background-color: white; */
+    position: absolute;
+    left: -1em;
+    top: 2px;
+    bottom: 0;
+}
+
+.guide-correct::before {
+    background-color: var(--correct);
+}
+
+.guide-almost::before {
+    background-color: var(--almost);
+}
+
+.guide-incorrect::before {
+    background-color: var(--incorrect);
+}
